@@ -13,7 +13,8 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Document extends Auditable<Long, Integer>{
+@Builder
+public class Document extends Auditable<Long>{
     @Column(nullable = false)
     private String originalName;
     @Column(nullable = false)
@@ -30,7 +31,7 @@ public class Document extends Auditable<Long, Integer>{
     private int showCount;
 
     @Builder(builderMethodName = "childBuilder")
-    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size, int likeCount, int commentCount, int showCount) {
+    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size, int likeCount, int commentCount, int showCount) {
         super(aLong, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.originalName = originalName;
         this.generatedName = generatedName;

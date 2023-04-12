@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class AuthUser extends Auditable<Integer, Integer> {
+public class AuthUser extends Auditable<Long> {
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false, unique = true)
@@ -31,7 +31,7 @@ public class AuthUser extends Auditable<Integer, Integer> {
     }
 
     @Builder(builderMethodName = "childBuilder")
-    public AuthUser(Integer integer, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy, boolean deleted, String username, String email, String phoneNumber, String password, Language language, String role) {
+    public AuthUser(Long integer, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String username, String email, String phoneNumber, String password, Language language, String role) {
         super(integer, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.username = username;
         this.email = email;

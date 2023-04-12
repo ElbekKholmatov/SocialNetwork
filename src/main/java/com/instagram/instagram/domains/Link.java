@@ -10,12 +10,13 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Link extends Auditable<Integer, Integer>{
+@Builder
+public class Link extends Auditable<Long>{
     private String name;
     private String link;
 
     @Builder(builderMethodName = "childBuilder")
-    public Link(Integer integer, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy, boolean deleted, String name, String link) {
+    public Link(Long integer, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String name, String link) {
         super(integer, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.name = name;
         this.link = link;

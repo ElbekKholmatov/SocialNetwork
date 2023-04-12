@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 @MappedSuperclass
-public class Auditable<ID extends Serializable, U_ID extends Serializable> {
+public class Auditable<ID extends Serializable> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private ID id;
@@ -24,8 +24,8 @@ public class Auditable<ID extends Serializable, U_ID extends Serializable> {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private U_ID createdBy;
-    private U_ID updatedBy;
+    private ID createdBy;
+    private ID updatedBy;
 
     @Column(columnDefinition = "boolean default 'f'")
     private boolean deleted;

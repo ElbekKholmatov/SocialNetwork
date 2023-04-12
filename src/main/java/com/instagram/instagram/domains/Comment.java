@@ -11,16 +11,17 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class Comment extends Auditable<Long, Integer>{
+@Builder
+public class Comment extends Auditable<Long>{
     @Column(nullable = false)
     private Long postId;
     @Column(nullable = false)
     private String message;
     @Column(nullable = false)
-    private Integer userId;
+    private Long userId;
 
     @Builder(builderMethodName = "childBuilder")
-    public Comment(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Integer createdBy, Integer updatedBy, boolean deleted, Long postId, String message, Integer userId) {
+    public Comment(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, Long postId, String message, Long userId) {
         super(aLong, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.postId = postId;
         this.message = message;

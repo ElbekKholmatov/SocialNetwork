@@ -10,24 +10,44 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User{
+
     @Id
-    private Integer authUserId;
+    private Long authUserId;
     private String name;
     private String bio;
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Link> links;
     @OneToOne
     private Document picture;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Document> stories;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Document> posts;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Document> saved;
     public enum Gender{
         MALE, FEMALE
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
