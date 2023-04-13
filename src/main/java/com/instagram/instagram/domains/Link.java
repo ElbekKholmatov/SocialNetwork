@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
-@Builder
+@Builder(builderMethodName = "childBuilder")
 public class Link extends Auditable<Long>{
     private String name;
     private String link;

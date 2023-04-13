@@ -1,21 +1,23 @@
 package com.instagram.instagram.domains;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class HashTag {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Builder(builderMethodName = "childBuilder")
+public class HashTag extends Auditable<Long>{
+    @Column(unique = true,nullable = false)
     private String hashTag;
+
+    @Builder(builderMethodName = "childBuilder")
+    public HashTag(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String hashTag) {
+        super(id, createdAt, updatedAt, createdBy, updatedBy, deleted);
+        this.hashTag = hashTag;
+    }
 }

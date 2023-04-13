@@ -1,5 +1,6 @@
-package com.instagram.instagram.domains;
+package com.instagram.instagram.domains.basic;
 
+import com.instagram.instagram.domains.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrePersist;
@@ -12,9 +13,10 @@ import java.util.UUID;
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
-@Builder
-public class Document extends Auditable<Long>{
+@Builder(builderMethodName = "childBuilder")
+public class Document extends Auditable<Long> {
     @Column(nullable = false)
     private String originalName;
     @Column(nullable = false)
@@ -26,21 +28,15 @@ public class Document extends Auditable<Long>{
     @Column(nullable = false)
     private Long size;
     private String caption;
-    private int likeCount;
-    private int commentCount;
-    private int showCount;
 
     @Builder(builderMethodName = "childBuilder")
-    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size, int likeCount, int commentCount, int showCount) {
+    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size) {
         super(aLong, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.originalName = originalName;
         this.generatedName = generatedName;
         this.extension = extension;
         this.mimeType = mimeType;
         this.size = size;
-        this.likeCount = likeCount;
-        this.commentCount = commentCount;
-        this.showCount = showCount;
     }
 
     @PrePersist

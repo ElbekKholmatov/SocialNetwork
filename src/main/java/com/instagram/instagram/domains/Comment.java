@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString(callSuper = true)
-@Builder
+@Builder(builderMethodName = "childBuilder")
 public class Comment extends Auditable<Long>{
     @Column(nullable = false)
     private Long postId;
@@ -21,8 +22,8 @@ public class Comment extends Auditable<Long>{
     private Long userId;
 
     @Builder(builderMethodName = "childBuilder")
-    public Comment(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, Long postId, String message, Long userId) {
-        super(aLong, createdAt, updatedAt, createdBy, updatedBy, deleted);
+    public Comment(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, Long postId, String message, Long userId) {
+        super(id, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.postId = postId;
         this.message = message;
         this.userId = userId;

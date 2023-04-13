@@ -1,21 +1,23 @@
-package com.instagram.instagram.domains;
+package com.instagram.instagram.domains.basic;
 
+import com.instagram.instagram.domains.Link;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "users")
 public class User{
 
     @Id
     private Long authUserId;
-    private String name;
+    private String fullName;
     private String bio;
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -23,11 +25,11 @@ public class User{
     private List<Link> links;
     @OneToOne
     private Document picture;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Document> stories;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Document> posts;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Document> saved;
     public enum Gender{
         MALE, FEMALE
