@@ -25,13 +25,17 @@ public class AuthUser extends Auditable<Long> {
     private String password;
     @Enumerated(EnumType.STRING)
     private Language language;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     public enum Language{
         ENGLISH, UZBEK
     }
+    public enum Role {
+        USER, ADMIN
+    }
 
     @Builder(builderMethodName = "childBuilder")
-    public AuthUser(Long integer, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String username, String email, String phoneNumber, String password, Language language, String role) {
+    public AuthUser(Long integer, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String username, String email, String phoneNumber, String password, Language language, Role role) {
         super(integer, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.username = username;
         this.email = email;

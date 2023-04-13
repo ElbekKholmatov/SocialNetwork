@@ -1,4 +1,4 @@
-package com.instagram.instagram.dto;
+package com.instagram.instagram.dto.auth;
 
 import com.instagram.instagram.domains.auth.AuthUser;
 import lombok.Data;
