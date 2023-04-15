@@ -20,7 +20,7 @@ public class PostDto implements Serializable {
     private final List<Long> documents;
     private final List<String> mentions;
     private final Location location;
-    private final List<HashTagDto> hashTags;
+    private final List<String> hashTags;
 
     /**
      * A DTO for the {@link Document} entity
@@ -36,21 +36,4 @@ public class PostDto implements Serializable {
         private final String caption;
     }
 
-    /**
-     * A DTO for the {@link com.instagram.instagram.domains.auth.AuthUser} entity
-     */
-    @Data
-    public static class AuthUserDto implements Serializable {
-        private final Long id;
-        private final String username;
-    }
-
-    /**
-     * A DTO for the {@link com.instagram.instagram.domains.HashTag} entity
-     */
-    @Data
-    public static class HashTagDto implements Serializable {
-        private final Long id;
-        private final String hashTag;
-    }
 }

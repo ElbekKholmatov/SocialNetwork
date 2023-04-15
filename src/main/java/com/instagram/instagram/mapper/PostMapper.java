@@ -1,6 +1,7 @@
 package com.instagram.instagram.mapper;
 
 import com.instagram.instagram.domains.basic.Post;
+import com.instagram.instagram.dto.CreatePostDTO;
 import com.instagram.instagram.dto.PostDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -9,5 +10,5 @@ import org.mapstruct.factory.Mappers;
 public interface PostMapper {
     PostMapper POST_MAPPER = Mappers.getMapper(PostMapper.class);
 
-    Post toEntity(PostDto dto);
+    Post toEntity(CreatePostDTO dto);
 }
