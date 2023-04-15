@@ -27,16 +27,18 @@ public class Document extends Auditable<Long> {
     private String mimeType;
     @Column(nullable = false)
     private Long size;
-    private String caption;
+//    private String caption;
+    private String path;
 
     @Builder(builderMethodName = "childBuilder")
-    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size) {
+    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size, String path) {
         super(aLong, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.originalName = originalName;
         this.generatedName = generatedName;
         this.extension = extension;
         this.mimeType = mimeType;
         this.size = size;
+        this.path = path;
     }
 
     @PrePersist
