@@ -21,7 +21,7 @@ public class Post extends Auditable<Long> {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Document> documents;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AuthUser> mentions;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -2,6 +2,7 @@ package com.instagram.instagram.dto;
 
 import com.instagram.instagram.domains.HashTag;
 import com.instagram.instagram.domains.Location;
+import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.domains.basic.User;
 import lombok.Data;
@@ -16,8 +17,8 @@ import java.util.List;
 public class CreatePostDTO implements Serializable {
     private final Long createdBy;
     private final String caption;
-    private final List<Document> document;
-    private final List<User> mentions;
     private final Location location;
-    private final List<HashTag> hashTags;
+//    private final List<Document> document;
+//    private final List<AuthUser> mentions;
+//    private final List<HashTag> hashTags;
 }
