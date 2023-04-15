@@ -32,6 +32,7 @@ public class SecurityConfigurer {
                 .authorizeHttpRequests(httpReq -> httpReq
                         .requestMatchers("/api/v1/auth/token",
                                 "/file/**",
+                                "/document/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/**",
@@ -66,4 +67,6 @@ public class SecurityConfigurer {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
