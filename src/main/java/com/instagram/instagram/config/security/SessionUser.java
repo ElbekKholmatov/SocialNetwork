@@ -26,6 +26,13 @@ public class SessionUser {
         return user.getEmail();
     }
 
+    public Long id() {
+        UserDetails user = user();
+        if (Objects.isNull(user))
+            return -1L;
+        return user.getId();
+    }
+
     public String username() {
         UserDetails user = user();
         if (Objects.isNull(user))
