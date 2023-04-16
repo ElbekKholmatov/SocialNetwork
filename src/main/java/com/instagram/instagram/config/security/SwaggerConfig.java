@@ -1,4 +1,4 @@
-package com.instagram.instagram.config;
+package com.instagram.instagram.config.security;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;

@@ -1,4 +1,4 @@
-package com.instagram.instagram.config;
+package com.instagram.instagram.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
