@@ -1,7 +1,7 @@
 package com.instagram.instagram.controller;
 
 
-import com.instagram.instagram.config.UserDetailsService;
+import com.instagram.instagram.config.security.UserDetailsService;
 import com.instagram.instagram.dto.GenerateTokenDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.instagram.instagram.config;
+package com.instagram.instagram.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
