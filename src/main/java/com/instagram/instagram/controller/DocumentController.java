@@ -32,7 +32,6 @@ public class DocumentController {
 
     private final DocumentService documentService;
     private final PagedResourcesAssembler<Document> pagedResourcesAssembler;
-    private DocumentModelAssembler docModelAssembler;
 
     @GetMapping("/")
     public ResponseEntity<List<Document>> getDocuments(){
@@ -50,13 +49,12 @@ public class DocumentController {
     }
 
     @GetMapping("/pagination")
-    public PagedModel<EntityModel<Document>> getPosts(
+    public Page<Document> getPosts(
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "page", defaultValue = "0") int page
     ){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Document> docPage = documentService.getDocsWithPagination(pageable);
-        return pagedResourcesAssembler.toModel(docPage, docModelAssembler);
+        return documentService.getDocsWithPagination(pageable);
     }
 
     @PostMapping("/uploadFiles")
@@ -73,23 +71,5 @@ public class DocumentController {
 //                documentService.saveDocument(file)
 //        );
 //    }
-}
-@Component
-class DocumentModelAssembler implements RepresentationModelAssembler<Document, EntityModel<Document>> {
-
-    public EntityModel<Document> toModel(@NonNull Document post) {
-        return EntityModel.of(post,
-                linkTo(methodOn(DocumentController.class).getDocument(post.getId())).withSelfRel(),
-                linkTo(methodOn(DocumentController.class).getDocuments()).withRel("posts"));
-    }
-
-    @Override
-    public CollectionModel<EntityModel<Document>> toCollectionModel(Iterable<? extends Document> entities) {
-        List<EntityModel<Document>> postsEntityModel = new ArrayList<>();
-        entities.forEach(post -> postsEntityModel.add(toModel(post)));
-        return CollectionModel.of(postsEntityModel,
-                linkTo(methodOn(DocumentController.class).getDocuments()).withRel("posts"));
-    }
-
 }
 
