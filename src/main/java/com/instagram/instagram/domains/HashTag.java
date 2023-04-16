@@ -1,6 +1,7 @@
 package com.instagram.instagram.domains;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,9 @@ import java.time.LocalDateTime;
 @Setter
 @Builder(builderMethodName = "childBuilder")
 public class HashTag extends Auditable<Long>{
-    @Column(unique = true,nullable = false)
+    @Pattern(regexp = "^#[\\p{L}0-9_]+$", message = "Hashtag is not valid")
+    // ^#[\\p{L}0-9_]+$ is used to match hashtags that start with "#" and contain only letters, digits, and underscores.
+    @Column(unique = true, nullable = false)
     private String hashTag;
 
     @Builder(builderMethodName = "childBuilder")
