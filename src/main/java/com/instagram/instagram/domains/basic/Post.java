@@ -1,6 +1,7 @@
 package com.instagram.instagram.domains.basic;
 
 import com.instagram.instagram.domains.*;
+import com.instagram.instagram.domains.auth.AuthUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +19,10 @@ public class Post extends Auditable<Long> {
     private Integer likes;
     private Integer viewsCount;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Document> document;
+    private List<Document> documents;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> mentions;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AuthUser> mentions;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Location location;
@@ -40,12 +41,12 @@ public class Post extends Auditable<Long> {
             Long createdBy,
             Long updatedBy,
             boolean deleted,
-            String caption, Integer likes, Integer viewsCount, List<Document> document, Location location, List<HashTag> hashTags, List<Comment> comments, List<User> mentions) {
+            String caption, Integer likes, Integer viewsCount, List<Document> documents, Location location, List<HashTag> hashTags, List<Comment> comments, List<AuthUser> mentions) {
         super(id, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.caption = caption;
         this.likes = likes;
         this.viewsCount = viewsCount;
-        this.document = document;
+        this.documents = documents;
         this.location = location;
         this.hashTags = hashTags;
         this.comments = comments;
