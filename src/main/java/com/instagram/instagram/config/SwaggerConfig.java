@@ -66,5 +66,13 @@ public class SwaggerConfig {
                 .pathsToMatch("/post/**", "/config/**", "/file/**", "/user/**","/document/**")
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi followGroupAPI() {
+        return GroupedOpenApi.builder()
+                .group("follow")
+                .pathsToMatch("/api/v1/follow", "/api/v1/unfollow")
+                .build();
+    }
 }
 
