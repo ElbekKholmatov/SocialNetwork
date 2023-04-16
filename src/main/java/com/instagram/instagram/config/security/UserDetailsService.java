@@ -1,4 +1,4 @@
-package com.instagram.instagram.config;
+package com.instagram.instagram.config.security;
 
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.dto.GenerateTokenDTO;
