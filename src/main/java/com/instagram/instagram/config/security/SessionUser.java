@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Component
@@ -28,6 +29,7 @@ public class SessionUser {
 
     public Long id() {
         UserDetails user = user();
+
         if (Objects.isNull(user))
             return -1L;
         return user.getId();
