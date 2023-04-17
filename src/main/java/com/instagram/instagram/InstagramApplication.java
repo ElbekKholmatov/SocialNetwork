@@ -4,11 +4,17 @@ package com.instagram.instagram;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.instagram.instagram.domains.auth.AuthUser;
+import com.instagram.instagram.repository.AuthUserRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.io.FileInputStream;
@@ -18,6 +24,7 @@ import java.io.IOException;
 
 @SpringBootApplication
 @OpenAPIDefinition
+@EnableJpaRepositories
 @SecurityScheme(
         name = "Bearer Authentication",
         type = SecuritySchemeType.HTTP,

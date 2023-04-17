@@ -32,7 +32,7 @@ public class User{
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Document> saved;
     public enum Gender{
-        MALE, FEMALE
+        MALE, FEMALE, NOT_GIVEN
     }
 }
 
