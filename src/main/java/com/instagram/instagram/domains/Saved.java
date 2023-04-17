@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @NoArgsConstructor
-@Builder(builderMethodName = "childBuilder")
+
+//@Builder
 @Table(name = "saved")
 @AllArgsConstructor
 public class Saved extends Auditable<Long>{
