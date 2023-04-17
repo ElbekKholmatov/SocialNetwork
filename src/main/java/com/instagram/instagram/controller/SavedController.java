@@ -1,6 +1,7 @@
 package com.instagram.instagram.controller;
 
-import com.instagram.instagram.config.JwtUtils;
+
+import com.instagram.instagram.config.security.JwtUtils;
 import com.instagram.instagram.domains.Saved;
 import com.instagram.instagram.service.SavedService;
 import lombok.NonNull;
@@ -19,7 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/saved")
 public class SavedController {
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
     private final SavedService savedService;
     private final JwtUtils jwtUtils;
 
@@ -43,9 +44,9 @@ public class SavedController {
     public ResponseEntity<List<Saved>> getUsersSavedPostsAll(){
         return ResponseEntity.ok(savedService.getAllSavedMessages());
     }
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Saved> deleteUsersSavedPost(@PathVariable Long id){
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<Saved> deleteUsersSavedPost(@PathVariable Long id){
 //        return ResponseEntity.status()
-    }
+//    }
 
 }
