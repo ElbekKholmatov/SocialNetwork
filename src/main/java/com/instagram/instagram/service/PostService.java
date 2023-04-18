@@ -1,9 +1,11 @@
 package com.instagram.instagram.service;
 
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.HashTag;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.domains.basic.Post;
+import com.instagram.instagram.domains.basic.User;
 import com.instagram.instagram.dto.CreatePostDTO;
 import com.instagram.instagram.dto.PostDto;
 import com.instagram.instagram.firebase.MediaService;
@@ -12,18 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static com.instagram.instagram.mapper.PostMapper.POST_MAPPER;
-import static java.util.UUID.randomUUID;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +27,9 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final DocumentService documentService;
-    private final MediaService mediaService;
     private final UserService userService;
     private final HashTagService hashTagService;
+    private final SessionUser sessionUser;
 
 
     public List<Post> getPosts() {
@@ -48,17 +44,16 @@ public class PostService {
         return postRepository.findAllByUserId(id);
     }
 
-    public Page<Post> getPostsByUserIdWithPagination(Pageable pageable, Long id) {
-        return postRepository.findAllByUserIdWithPagination(pageable, id);
-
-    }
 
     public Page<Post> getPostsWithPagination(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
 
     public Post save(PostDto dto) {
-        CreatePostDTO createPostDTO = new CreatePostDTO(dto.getCreatedBy(),dto.getCaption(),dto.getLocation());
+        if (sessionUser.id()==-1) {
+            throw new RuntimeException("User not found");
+        }
+        CreatePostDTO createPostDTO = new CreatePostDTO(sessionUser.id(),dto.getCaption(),dto.getLocation());
         Post post = POST_MAPPER.toEntity(createPostDTO);
         List<Document> documents = new ArrayList<>();
         dto.getDocuments().forEach(document -> {
@@ -68,11 +63,7 @@ public class PostService {
         });
 
         List<AuthUser> mentions = new ArrayList<>();
-        dto.getMentions().forEach(mention -> {
-            mentions.add(userService.getUser(mention).orElseThrow(
-                    () -> new RuntimeException("User not found")
-            ));
-        });
+        dto.getMentions().forEach(mention -> mentions.add(userService.getUser(mention)));
 
         List<HashTag> hashTags = new ArrayList<>();
         dto.getHashTags().forEach(hashTag -> {
@@ -82,12 +73,28 @@ public class PostService {
             );
         });
 
-        post.setCreatedBy(dto.getCreatedBy());
+        post.setCreatedBy(sessionUser.id());
         post.setDocuments(documents);
         post.setMentions(mentions);
         post.setHashTags(hashTags);
 
         return postRepository.save(post);
+    }
+
+    public Page<Post> getPostsByMention(String mention, Pageable pageable) {
+        AuthUser user = userService.getUser(mention);
+        return postRepository.findAllByMentionsUsername(user, pageable);
+
+    }
+
+    public Page<Post> getPostsByHashtag(String hashtag, Pageable pageable) {
+        HashTag hashTag1 = hashTagService.getHashTag(hashtag).orElseThrow(() -> new RuntimeException("hash tag not found"));
+        return postRepository.findAllByHashTag(hashTag1,pageable);
+    }
+
+    public Page<Post> getPostsByUsername(String uname, Pageable pageable) {
+        AuthUser user = userService.getUser(uname);
+        return postRepository.findAllByUser(user.getId(),pageable);
     }
 }
 

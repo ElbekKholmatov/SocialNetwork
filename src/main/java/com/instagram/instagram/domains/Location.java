@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Location extends Auditable<Long> {

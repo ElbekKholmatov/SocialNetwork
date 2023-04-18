@@ -1,5 +1,6 @@
 package com.instagram.instagram.domains;
 
+import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.Post;
 import com.instagram.instagram.domains.basic.User;
 import jakarta.persistence.Entity;
@@ -10,7 +11,6 @@ import jakarta.persistence.*;
 @Entity
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Notification extends Auditable<Long>{
@@ -20,14 +20,11 @@ public class Notification extends Auditable<Long>{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private AuthUser user;
 
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "story_id")

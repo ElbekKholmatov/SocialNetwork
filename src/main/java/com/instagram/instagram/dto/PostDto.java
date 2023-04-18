@@ -15,25 +15,9 @@ import java.util.Locale;
  */
 @Data
 public class PostDto implements Serializable {
-    private final Long createdBy;
     private final String caption;
     private final List<Long> documents;
     private final List<String> mentions;
     private final Location location;
     private final List<String> hashTags;
-
-    /**
-     * A DTO for the {@link Document} entity
-     */
-    @Data
-    public static class DocumentDto implements Serializable {
-        private final Long createdBy;
-        private final String originalName;
-        private final String generatedName;
-        private final String extension;
-        private final String mimeType;
-        private final Long size;
-        private final String caption;
-    }
-
 }
