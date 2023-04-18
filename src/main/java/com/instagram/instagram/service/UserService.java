@@ -35,5 +35,19 @@ public class UserService {
         }
         return users;
     }
+
+    public void saveUserByAuthId(String username, Long authId) {
+        User user = User.builder()
+                .authUserId(authId)
+                .fullName(username)
+                .bio("")
+                .gender(User.Gender.NOT_GIVEN)
+                .picture(null)
+                .build();
+
+        System.out.println("User Service    34:  =>  user saving process      ");
+        System.out.println(user.toString());
+        userRepository.save(user);
+    }
 }
 

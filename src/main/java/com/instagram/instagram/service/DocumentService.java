@@ -1,5 +1,6 @@
 package com.instagram.instagram.service;
 
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.firebase.MediaService;
 import com.instagram.instagram.repository.DocumentRepository;
@@ -24,8 +25,9 @@ public class DocumentService {
 
     private final DocumentRepository documentRepository;
     private final MediaService mediaService;
+    private final SessionUser sessionUser;
 
-//    @Async
+    //    @Async
     public Document saveDocument(MultipartFile file) {
         return documentRepository.save(
                 Document.childBuilder()
@@ -39,14 +41,16 @@ public class DocumentService {
         );
     }
 
-//    @Async
-    public List<Document> saveDocuments(List<MultipartFile> files, Long userId) {
+
+    public List<Document> saveDocuments(List<MultipartFile> files) {
+        if (sessionUser.id()==-1)
+            throw new RuntimeException("User not found");
         List<Document> documents = new ArrayList<>();
         files.forEach(
                 file -> {
                      Document document = documentRepository.save(
                             Document.childBuilder()
-                                    .createdBy(userId)
+                                    .createdBy(sessionUser.id())
                                     .originalName(file.getOriginalFilename())
                                     .generatedName(randomUUID() + file.getOriginalFilename())
                                     .extension(StringUtils.getFilenameExtension(file.getOriginalFilename()))

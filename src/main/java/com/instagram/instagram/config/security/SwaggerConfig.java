@@ -60,11 +60,75 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi annotationGroupAPI() {
+    public GroupedOpenApi all() {
         return GroupedOpenApi.builder()
-                .group("annotation")
-                .pathsToMatch("/post/**", "/config/**", "/user/**","/document/**")
+                .group("all")
+                .pathsToMatch(
+                        "/**"
+                )
                 .build();
     }
+    @Bean
+    public GroupedOpenApi user() {
+        return GroupedOpenApi.builder()
+                .group("user")
+                .pathsToMatch(
+                        "/api/v1/auth/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi comment() {
+        return GroupedOpenApi.builder()
+                .group("comment")
+                .pathsToMatch(
+                        "/api/v1/comment/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi document() {
+        return GroupedOpenApi.builder()
+                .group("document")
+                .pathsToMatch(
+                        "/api/v1/document/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi follow() {
+        return GroupedOpenApi.builder()
+                .group("follow")
+                .pathsToMatch(
+                        "/api/v1/follow/**"
+                )
+                .build();
+    }
+
+
+
+    @Bean
+    public GroupedOpenApi post() {
+        return GroupedOpenApi.builder()
+                .group("post")
+                .pathsToMatch(
+                        "/api/v1/post/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi saved() {
+        return GroupedOpenApi.builder()
+                .group("Saved")
+                .pathsToMatch(
+                        "/api/v1/saved/**"
+                )
+                .build();
+    }
+
 }
 
