@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 public class HashTag extends Auditable<Long>{
     @Column(unique = true,nullable = false)
     private String hashTag;

@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 public class Follow extends Auditable<Long>{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id")

@@ -15,7 +15,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@Builder(builderMethodName = "childBuilder")
 public class Document extends Auditable<Long> {
     @Column(nullable = false)
     private String originalName;

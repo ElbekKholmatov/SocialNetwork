@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@Builder(builderMethodName = "childBuilder")
 public class Link extends Auditable<Long>{
     private String name;
     private String link;

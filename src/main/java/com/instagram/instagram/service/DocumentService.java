@@ -40,12 +40,13 @@ public class DocumentService {
     }
 
 //    @Async
-    public List<Document> saveDocuments(List<MultipartFile> files) {
+    public List<Document> saveDocuments(List<MultipartFile> files, Long userId) {
         List<Document> documents = new ArrayList<>();
         files.forEach(
                 file -> {
                      Document document = documentRepository.save(
                             Document.childBuilder()
+                                    .createdBy(userId)
                                     .originalName(file.getOriginalFilename())
                                     .generatedName(randomUUID() + file.getOriginalFilename())
                                     .extension(StringUtils.getFilenameExtension(file.getOriginalFilename()))

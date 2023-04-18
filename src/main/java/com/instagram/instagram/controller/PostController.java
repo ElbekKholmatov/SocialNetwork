@@ -1,5 +1,6 @@
 package com.instagram.instagram.controller;
 
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.basic.Post;
 
 import com.instagram.instagram.dto.PostDto;
@@ -34,6 +35,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class PostController {
 
     private final PostService postService;
+    private final SessionUser sessionUser;
 
     private final PagedResourcesAssembler<Post> pagedResourcesAssembler;
 
@@ -70,7 +72,8 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody PostDto postDto){
-        val post = postService.save(postDto);
+        System.out.println(sessionUser.id());
+        var post = postService.save(postDto);
         return ResponseEntity.ok(post);
     }
 

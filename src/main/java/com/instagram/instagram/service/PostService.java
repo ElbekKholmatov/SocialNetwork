@@ -1,5 +1,6 @@
 package com.instagram.instagram.service;
 
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.HashTag;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.Document;
@@ -12,18 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static com.instagram.instagram.mapper.PostMapper.POST_MAPPER;
-import static java.util.UUID.randomUUID;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +29,7 @@ public class PostService {
     private final MediaService mediaService;
     private final UserService userService;
     private final HashTagService hashTagService;
+    private final SessionUser sessionUser;
 
 
     public List<Post> getPosts() {
@@ -58,7 +54,8 @@ public class PostService {
     }
 
     public Post save(PostDto dto) {
-        CreatePostDTO createPostDTO = new CreatePostDTO(dto.getCreatedBy(),dto.getCaption(),dto.getLocation());
+
+        CreatePostDTO createPostDTO = new CreatePostDTO(sessionUser.id(),dto.getCaption(),dto.getLocation());
         Post post = POST_MAPPER.toEntity(createPostDTO);
         List<Document> documents = new ArrayList<>();
         dto.getDocuments().forEach(document -> {
@@ -78,7 +75,7 @@ public class PostService {
             );
         });
 
-        post.setCreatedBy(dto.getCreatedBy());
+        post.setCreatedBy(sessionUser.id());
         post.setDocuments(documents);
         post.setMentions(mentions);
         post.setHashTags(hashTags);

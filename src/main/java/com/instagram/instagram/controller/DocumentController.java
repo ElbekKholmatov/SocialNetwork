@@ -1,5 +1,6 @@
 package com.instagram.instagram.controller;
 
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.service.DocumentService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class DocumentController {
 
     private final DocumentService documentService;
-    private final PagedResourcesAssembler<Document> pagedResourcesAssembler;
-
+    private final SessionUser sessionUser;
     @GetMapping("/")
     public ResponseEntity<List<Document>> getDocuments(){
         return ResponseEntity.ok(
@@ -50,18 +50,18 @@ public class DocumentController {
         return documentService.getDocsWithPagination(pageable);
     }
 
-    @PostMapping(name = "/uploadFiles")
+    @PostMapping(name = "/uploadFiles", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<List<Document>> uploadDocs(@RequestPart("files") List<MultipartFile> files){
         return ResponseEntity.ok(
-                documentService.saveDocuments(files)
+                documentService.saveDocuments(files, sessionUser.id())
         );
     }
-    @PostMapping(name = "/uploadFile")
-    public ResponseEntity<Document> uploadDoc(@RequestParam("file") MultipartFile file){
-        return ResponseEntity.ok(
-                documentService.saveDocument(file)
-        );
-    }
+//    @PostMapping(name = "/uploadFile")
+//    public ResponseEntity<Document> uploadDoc(@RequestParam("file") MultipartFile file){
+//        return ResponseEntity.ok(
+//                documentService.saveDocument(file)
+//        );
+//    }
 
 //    @PostMapping("/profile/pic/{fileName}")
 //    public Object download(@PathVariable String fileName) {

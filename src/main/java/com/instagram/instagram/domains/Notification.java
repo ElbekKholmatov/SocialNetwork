@@ -11,7 +11,6 @@ import jakarta.persistence.*;
 @Entity
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Notification extends Auditable<Long>{
