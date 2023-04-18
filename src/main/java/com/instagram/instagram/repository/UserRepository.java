@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Transactional
@@ -17,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
                 @Param("_bio") String bio,
                 @Param("_gender") User.Gender gender,
                 @Param("_picture") Document picture);
+
+    @Query("from User where authUserId in ?1")
+    List<User> findAllByAuthUserId(List<Long> ids);
 }
