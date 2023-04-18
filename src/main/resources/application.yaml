@@ -19,8 +19,6 @@ springdoc:
   api-docs:
     path: /api-docs
 
-file:
-  upload-dir: /home/elbek/Videos
 
 jwt:
   access:
