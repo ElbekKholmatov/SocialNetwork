@@ -5,9 +5,8 @@ import com.instagram.instagram.domains.Saved;
 import com.instagram.instagram.domains.basic.Post;
 import com.instagram.instagram.domains.basic.User;
 import com.instagram.instagram.repository.PostRepository;
+import com.instagram.instagram.repository.SavedRepository;
 import com.instagram.instagram.repository.UserRepository;
-import com.instagram.instagram.repository.savedPostsRepo.SavedPagingAndSortingRepository;
-import com.instagram.instagram.repository.savedPostsRepo.SavedRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,15 +18,15 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SavedService {
+
     private final SavedRepository savedRepository;
-    private final SavedPagingAndSortingRepository savedPagingAndSortingRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final SessionUser sessionUser;
 
 
     public Page<Saved> getAllSavedMessages(Pageable pageable) {
-        return savedPagingAndSortingRepository.findAllByUsername(pageable, sessionUser.id());
+        return savedRepository.findAllByUsername(pageable, sessionUser.id());
     }
     public List<Saved> getAllSavedMessages() {
         return savedRepository.findAllUsersPosts(sessionUser.id());

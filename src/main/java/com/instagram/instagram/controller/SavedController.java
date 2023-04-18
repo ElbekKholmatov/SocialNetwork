@@ -19,9 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SavedController {
     private final SavedService savedService;
-    private final SessionUser sessionUser;
-
-
 
     @GetMapping("/page")
     public ResponseEntity<Page<Saved>> getUserSavedPostsByPage(@RequestParam(name = "size", defaultValue = "3") int size, @RequestParam(name = "page", defaultValue = "0") int page) {
