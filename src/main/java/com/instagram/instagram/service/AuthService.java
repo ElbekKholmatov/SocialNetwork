@@ -25,6 +25,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public GetTokenDTO register(CreateAuthUserDTO dto) {
+
         AuthUser authUser = new AuthUser();
         authUser.setUsername(dto.username());
         authUser.setEmail(dto.email());
@@ -32,6 +33,7 @@ public class AuthService {
         authUser.setPassword(passwordEncoder.encode(dto.password()));
         authUser.setLanguage(AuthUser.Language.UZBEK);
         authUser.setRole(AuthUser.Role.USER);
+        authUser.setActive(AuthUser.Active.ACTIVE);
 
         authUserRepository.save(authUser);
         TokenResponse tokenResponse = jwtUtils.generateToken(authUser.getUsername());
@@ -54,6 +56,7 @@ public class AuthService {
         );
         AuthUser user = authUserRepository.findByUsername(dto.username())
                 .orElseThrow();
+        user.setActive(AuthUser.Active.ACTIVE);
         TokenResponse tokenResponse = jwtUtils.generateToken(user.getUsername());
         return GetTokenDTO.builder()
                 .token(tokenResponse.getAccessToken())
