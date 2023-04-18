@@ -26,10 +26,10 @@ public class AuthService {
 
     public GetTokenDTO register(CreateAuthUserDTO dto) {
         AuthUser authUser = new AuthUser();
-        authUser.setUsername(dto.getUsername());
-        authUser.setEmail(dto.getEmail());
-        authUser.setPhoneNumber(dto.getPhoneNumber());
-        authUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+        authUser.setUsername(dto.username());
+        authUser.setEmail(dto.email());
+        authUser.setPhoneNumber(dto.phoneNumber());
+        authUser.setPassword(passwordEncoder.encode(dto.password()));
         authUser.setLanguage(AuthUser.Language.UZBEK);
         authUser.setRole(AuthUser.Role.USER);
 
@@ -54,9 +54,9 @@ public class AuthService {
         );
         AuthUser user = authUserRepository.findByUsername(dto.username())
                 .orElseThrow();
-        String jwtToken = jwtUtils.generateToken(user);
+        TokenResponse tokenResponse = jwtUtils.generateToken(user.getUsername());
         return GetTokenDTO.builder()
-                .token(jwtToken)
+                .token(tokenResponse.getAccessToken())
                 .build();
     }
 
@@ -71,10 +71,10 @@ public class AuthService {
         authUser.setLanguage(AuthUser.Language.UZBEK);
         authUser.setRole(AuthUser.Role.USER);
         authUserRepository.updateAll(dto.username(), dto.phoneNumber(), dto.email(), dto.language());
-        String jwtToken = jwtUtils.generateToken(authUserRepository.findByUsername(dto.username()).orElseThrow());
+        TokenResponse tokenResponse = jwtUtils.generateToken(authUserRepository.findByUsername(dto.username()).get().getUsername());
 
         return GetTokenDTO.builder()
-                .token(jwtToken)
+                .token(tokenResponse.getAccessToken())
                 .build();
     }
 
