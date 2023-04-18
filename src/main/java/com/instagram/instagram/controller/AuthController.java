@@ -3,6 +3,8 @@ package com.instagram.instagram.controller;
 
 import com.instagram.instagram.config.security.UserDetailsService;
 import com.instagram.instagram.dto.GenerateTokenDTO;
+import com.instagram.instagram.dto.auth.TokenRequest;
+import com.instagram.instagram.dto.auth.TokenResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ public class AuthController {
     }
 
     @GetMapping("/token")
-    public ResponseEntity<String> getToken(@Valid GenerateTokenDTO dto) {
-        return ResponseEntity.ok(userDetailsService.generateToken(dto));
+    public ResponseEntity<TokenResponse> getToken(@Valid TokenRequest tokenRequest) {
+        return ResponseEntity.ok(userDetailsService.generateToken(tokenRequest));
     }
 }

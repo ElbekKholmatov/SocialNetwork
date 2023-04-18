@@ -68,11 +68,7 @@ public class PostService {
         });
 
         List<AuthUser> mentions = new ArrayList<>();
-        dto.getMentions().forEach(mention -> {
-            mentions.add(userService.getUser(mention).orElseThrow(
-                    () -> new RuntimeException("User not found")
-            ));
-        });
+        dto.getMentions().forEach(mention -> mentions.add(userService.getUser(mention)));
 
         List<HashTag> hashTags = new ArrayList<>();
         dto.getHashTags().forEach(hashTag -> {
