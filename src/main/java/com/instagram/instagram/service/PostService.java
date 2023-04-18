@@ -5,6 +5,7 @@ import com.instagram.instagram.domains.HashTag;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.domains.basic.Post;
+import com.instagram.instagram.domains.basic.User;
 import com.instagram.instagram.dto.CreatePostDTO;
 import com.instagram.instagram.dto.PostDto;
 import com.instagram.instagram.firebase.MediaService;
@@ -26,7 +27,6 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final DocumentService documentService;
-    private final MediaService mediaService;
     private final UserService userService;
     private final HashTagService hashTagService;
     private final SessionUser sessionUser;
@@ -44,17 +44,15 @@ public class PostService {
         return postRepository.findAllByUserId(id);
     }
 
-    public Page<Post> getPostsByUserIdWithPagination(Pageable pageable, Long id) {
-        return postRepository.findAllByUserIdWithPagination(pageable, id);
-
-    }
 
     public Page<Post> getPostsWithPagination(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
 
     public Post save(PostDto dto) {
-
+        if (sessionUser.id()==-1) {
+            throw new RuntimeException("User not found");
+        }
         CreatePostDTO createPostDTO = new CreatePostDTO(sessionUser.id(),dto.getCaption(),dto.getLocation());
         Post post = POST_MAPPER.toEntity(createPostDTO);
         List<Document> documents = new ArrayList<>();
@@ -81,6 +79,22 @@ public class PostService {
         post.setHashTags(hashTags);
 
         return postRepository.save(post);
+    }
+
+    public Page<Post> getPostsByMention(String mention, Pageable pageable) {
+        AuthUser user = userService.getUser(mention);
+        return postRepository.findAllByMentionsUsername(user, pageable);
+
+    }
+
+    public Page<Post> getPostsByHashtag(String hashtag, Pageable pageable) {
+        HashTag hashTag1 = hashTagService.getHashTag(hashtag).orElseThrow(() -> new RuntimeException("hash tag not found"));
+        return postRepository.findAllByHashTag(hashTag1,pageable);
+    }
+
+    public Page<Post> getPostsByUsername(String uname, Pageable pageable) {
+        AuthUser user = userService.getUser(uname);
+        return postRepository.findAllByUser(user.getId(),pageable);
     }
 }
 

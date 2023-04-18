@@ -63,8 +63,56 @@ public class SwaggerConfig {
     public GroupedOpenApi annotationGroupAPI() {
         return GroupedOpenApi.builder()
                 .group("annotation")
-                .pathsToMatch("/post/**", "/config/**", "/user/**","/document/**")
+                .pathsToMatch(
+                        "/**",
+                        "/post/**",
+                        "/config/**",
+                        "/user/**",
+                        "/document/**",
+                        "/comment/**"
+                )
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi all() {
+        return GroupedOpenApi.builder()
+                .group("all")
+                .pathsToMatch(
+                        "/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi follow() {
+        return GroupedOpenApi.builder()
+                .group("follow")
+                .pathsToMatch(
+                        "/api/v1/follow/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi document() {
+        return GroupedOpenApi.builder()
+                .group("document")
+                .pathsToMatch(
+                        "/document/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi post() {
+        return GroupedOpenApi.builder()
+                .group("post")
+                .pathsToMatch(
+                        "/post/**"
+                )
+                .build();
+    }
+
 }
 
