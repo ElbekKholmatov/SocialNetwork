@@ -4,6 +4,7 @@ import com.instagram.instagram.config.security.JwtUtils;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.dto.GetTokenDTO;
 import com.instagram.instagram.dto.auth.CreateAuthUserDTO;
+import com.instagram.instagram.dto.auth.TokenResponse;
 import com.instagram.instagram.repository.AuthUserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +29,14 @@ public class AuthService {
         authUser.setRole(AuthUser.Role.USER);
 
         authUserRepository.save(authUser);
-        String jwtToken = jwtUtils.generateToken(authUser);
+        TokenResponse tokenResponse = jwtUtils.generateToken(authUser.getUsername());
 
         Long authId =  authUserRepository.findAuthIdByUsername(authUser.getUsername());
 
         userService.saveUserByAuthId(authUser.getUsername(), authId);
 
         return GetTokenDTO.builder()
-                .token(jwtToken)
+                .token(tokenResponse.getAccessToken())
                 .build();
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -24,7 +23,6 @@ import java.io.IOException;
 
 @SpringBootApplication
 @OpenAPIDefinition
-@EnableJpaRepositories
 @SecurityScheme(
         name = "Bearer Authentication",
         type = SecuritySchemeType.HTTP,
@@ -42,12 +40,13 @@ public class InstagramApplication {
 //    ApplicationRunner runner(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder) {
 //        return args -> {
 //            AuthUser authUser = AuthUser.childBuilder()
-//                    .username("jason")
-//                    .email("ex@gmail.com")
-//                    .phoneNumber("010-1234-5678")
+//                    .username("john")
+//                    .email("jlkesh@gmail.com")
+//                    .phoneNumber("+998971112233")
 //                    .password(passwordEncoder.encode("123"))
 //                    .language(AuthUser.Language.ENGLISH)
 //                    .role(AuthUser.Role.USER)
+//                    .active(AuthUser.Active.ACTIVE)
 //                    .build();
 //            authUserRepository.save(authUser);
 //        };

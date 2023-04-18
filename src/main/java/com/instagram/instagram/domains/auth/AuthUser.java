@@ -39,7 +39,7 @@ public class AuthUser extends Auditable<Long> {
     }
 
     @Builder(builderMethodName = "childBuilder")
-    public AuthUser(Long integer, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String username, String email, String phoneNumber, String password, Language language, Role role) {
+    public AuthUser(Long integer, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String username, String email, String phoneNumber, String password, Language language, Role role,Active active) {
         super(integer, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.username = username;
         this.email = email;
@@ -47,5 +47,6 @@ public class AuthUser extends Auditable<Long> {
         this.password = password;
         this.language = language;
         this.role = role;
+        this.active = active;
     }
 }

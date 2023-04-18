@@ -83,6 +83,15 @@ public class SwaggerConfig {
                 )
                 .build();
     }
+    @Bean
+    public GroupedOpenApi user() {
+        return GroupedOpenApi.builder()
+                .group("user")
+                .pathsToMatch(
+                        "/api/v1/auth/**"
+                )
+                .build();
+    }
 
     @Bean
     public GroupedOpenApi follow() {
