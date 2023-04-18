@@ -103,7 +103,7 @@ public class SwaggerConfig {
         return GroupedOpenApi.builder()
                 .group("follow")
                 .pathsToMatch(
-                        "/api/v1/follow/**"
+                        "/api/v1/follows/**"
                 )
                 .build();
     }
