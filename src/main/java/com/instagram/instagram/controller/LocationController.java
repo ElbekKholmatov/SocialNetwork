@@ -29,22 +29,11 @@ import java.util.StringTokenizer;
 @RequestMapping("/api/v1/Location")
 
 public class LocationController {
-    private final LocationRepository locationRepository;
 
-    public LocationController(LocationRepository locationRepository) {
-        this.locationRepository = locationRepository;
-    }
-   private Long userId;
+    private Long userId;
+
     @GetMapping("/ip")
-    public String getClientIp(HttpServletRequest request) throws Exception {
-
-
-        String xForwardedForHeader = request.getHeader("X-Forwarded-For");
-        if (xForwardedForHeader == null) {
-            return request.getRemoteAddr();
-        } else {
-            return new StringTokenizer(xForwardedForHeader, ",").nextToken().trim();
-        }
+    public String getClientIp(double latitude, double longitude) throws Exception {
 
 
 //        String remoteAddr = "";
@@ -57,21 +46,13 @@ public class LocationController {
 //        }
 //        LocationService locationService = new LocationService();
 //        Location location = locationService.getGeoLocation(remoteAddr);
+//
+//        LocationService.ipToLatLong(remoteAddr);
 
-//        return remoteAddr;
+        return LocationService.convert(latitude,longitude);
 
 
 
-
-
-    }
-    @GetMapping("/location")
-    public Location getLocation(@NonNull LocationDto dto) {
-        Location location1= Location.childBuilder()
-                .address(dto.getAddress())
-                .longitude(dto.getLongitude())
-                .latitude(dto.getLatitude())
-                .build();
 
     }
 }

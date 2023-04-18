@@ -2,7 +2,6 @@
 package com.instagram.instagram.controller;
 
 
-import com.instagram.instagram.config.UserDetailsService;
 import com.instagram.instagram.domains.HashTag;
 import com.instagram.instagram.dto.GenerateTokenDTO;
 import com.instagram.instagram.repository.HashTagRepository;
