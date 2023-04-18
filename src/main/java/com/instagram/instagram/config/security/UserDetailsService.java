@@ -1,17 +1,15 @@
 package com.instagram.instagram.config.security;
 
 import com.instagram.instagram.domains.auth.AuthUser;
-import com.instagram.instagram.dto.GenerateTokenDTO;
+import com.instagram.instagram.dto.auth.TokenRequest;
+import com.instagram.instagram.dto.auth.TokenResponse;
 import com.instagram.instagram.repository.AuthUserRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
@@ -35,12 +33,12 @@ public class UserDetailsService implements org.springframework.security.core.use
         return new UserDetails(authUser);
     }
 
-    public String generateToken(@NonNull GenerateTokenDTO dto) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(dto.username(), dto.password());
-        Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        if (!authenticate.isAuthenticated())
-            throw new RuntimeException("Bad credentials");
-        return jwtUtils.generateToken(Map.of(), loadUserByUsername(dto.username()).getAuthUser());
+    public TokenResponse generateToken(@NonNull TokenRequest tokenRequest) {
+        String username = tokenRequest.username();
+        String password = tokenRequest.password();
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(username, password);
+        authenticationManager.authenticate(authentication);
+        return jwtUtils.generateToken(username);
     }
 }

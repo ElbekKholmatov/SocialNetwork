@@ -1,5 +1,6 @@
 package com.instagram.instagram.controller;
 
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.basic.Post;
 
 import com.instagram.instagram.dto.PostDto;
@@ -34,10 +35,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class PostController {
 
     private final PostService postService;
+    private final SessionUser sessionUser;
 
     private final PagedResourcesAssembler<Post> pagedResourcesAssembler;
 
-    private final PostModelAssembler postModelAssembler;
 
     @GetMapping("/")
     public ResponseEntity<List<Post>> getPosts(){
@@ -60,38 +61,20 @@ public class PostController {
     }
 
     @GetMapping("/pagination")
-    public PagedModel<EntityModel<Post>> getPosts(
+    public Page<Post> getPosts(
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "page", defaultValue = "0") int page
     ){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Post> postPage = postService.getPostsWithPagination(pageable);
-        return pagedResourcesAssembler.toModel(postPage, postModelAssembler);
+        return postService.getPostsWithPagination(pageable);
+
     }
 
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@RequestBody PostDto postDto){
-        val post = postService.save(postDto);
+        System.out.println(sessionUser.id());
+        var post = postService.save(postDto);
         return ResponseEntity.ok(post);
     }
 
 }
-@Component
-class PostModelAssembler implements RepresentationModelAssembler<Post, EntityModel<Post>> {
-
-    public EntityModel<Post> toModel(@NonNull Post post) {
-        return EntityModel.of(post,
-                linkTo(methodOn(PostController.class).getPost(post.getId())).withSelfRel(),
-                linkTo(methodOn(PostController.class).getPosts()).withRel("posts"));
-    }
-
-    @Override
-    public CollectionModel<EntityModel<Post>> toCollectionModel(Iterable<? extends Post> entities) {
-        List<EntityModel<Post>> postsEntityModel = new ArrayList<>();
-        entities.forEach(post -> postsEntityModel.add(toModel(post)));
-        return CollectionModel.of(postsEntityModel,
-                linkTo(methodOn(PostController.class).getPosts()).withRel("posts"));
-    }
-
-}
-

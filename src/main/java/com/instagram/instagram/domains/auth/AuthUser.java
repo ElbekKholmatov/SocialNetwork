@@ -25,10 +25,14 @@ public class AuthUser extends Auditable<Long> {
     private String password;
     @Enumerated(EnumType.STRING)
     private Language language;
+    private Active active;
     @Enumerated(EnumType.STRING)
     private Role role;
     public enum Language{
         ENGLISH, UZBEK
+    }
+    public enum Active{
+        NO_ACTIVE, ACTIVE, BLOCKED
     }
     public enum Role {
         USER, ADMIN

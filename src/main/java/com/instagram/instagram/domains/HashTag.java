@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 public class HashTag extends Auditable<Long>{
     @Pattern(regexp = "^#[\\p{L}0-9_]+$", message = "Hashtag is not valid")
     // ^#[\\p{L}0-9_]+$ is used to match hashtags that start with "#" and contain only letters, digits, and underscores.

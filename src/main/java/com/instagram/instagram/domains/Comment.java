@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@Builder(builderMethodName = "childBuilder")
 public class Comment extends Auditable<Long>{
     @Column(nullable = false)
     private Long postId;

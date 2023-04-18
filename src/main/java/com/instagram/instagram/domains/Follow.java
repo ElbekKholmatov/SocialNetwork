@@ -1,5 +1,6 @@
 package com.instagram.instagram.domains;
 
+import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,15 +13,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder(builderMethodName = "childBuilder")
 public class Follow extends Auditable<Long>{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id")
-    private User follower;
+    private AuthUser follower;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "following_id")
-    private User following;
+    private AuthUser following;
     @CreationTimestamp
     @Column(columnDefinition = "timestamp default now()")
     private LocalDateTime createdAt;
@@ -28,8 +28,6 @@ public class Follow extends Auditable<Long>{
     @Builder(builderMethodName = "childBuilder")
     public Follow(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, User follower, User following) {
         super(id, createdAt, updatedAt, createdBy, updatedBy, deleted);
-        this.follower = follower;
-        this.following = following;
     }
 
 }
