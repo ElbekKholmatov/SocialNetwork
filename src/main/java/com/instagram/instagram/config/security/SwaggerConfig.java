@@ -65,11 +65,11 @@ public class SwaggerConfig {
                 .group("annotation")
                 .pathsToMatch(
                         "/**",
-                        "/post/**",
-                        "/config/**",
-                        "/user/**",
-                        "/document/**",
-                        "/comment/**"
+                        "/api/v1/post/**",
+                        "/api/v1/config/**",
+                        "/api/v1/user/**",
+                        "/api/v1/document/**",
+                        "/api/v1/comment/**"
                 )
                 .build();
     }
@@ -108,7 +108,7 @@ public class SwaggerConfig {
         return GroupedOpenApi.builder()
                 .group("document")
                 .pathsToMatch(
-                        "/document/**"
+                        "/api/v1/document/**"
                 )
                 .build();
     }
@@ -118,7 +118,7 @@ public class SwaggerConfig {
         return GroupedOpenApi.builder()
                 .group("post")
                 .pathsToMatch(
-                        "/post/**"
+                        "/api/v1/post/**"
                 )
                 .build();
     }

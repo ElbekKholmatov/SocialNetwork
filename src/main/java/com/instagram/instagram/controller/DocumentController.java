@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/document")
+@RequestMapping("/api/v1/document")
 @Tag(
         name = "Post Controller",
         description = "this controller created for playing with post entity"
