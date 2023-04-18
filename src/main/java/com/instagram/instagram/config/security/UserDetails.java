@@ -1,4 +1,4 @@
-package com.instagram.instagram.config;
+package com.instagram.instagram.config.security;
 
 import com.instagram.instagram.domains.auth.AuthUser;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +31,13 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public String getUsername() {
         return authUser.getUsername();
+    }
+
+    public String getEmail() {
+        return authUser.getEmail();
+    }
+    public Long getId() {
+        return authUser.getId();
     }
 
     @Override
