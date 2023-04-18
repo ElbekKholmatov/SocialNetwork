@@ -6,6 +6,7 @@ import com.instagram.instagram.repository.DocumentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import static java.util.UUID.randomUUID;
 
@@ -23,12 +25,12 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final MediaService mediaService;
 
-
+//    @Async
     public Document saveDocument(MultipartFile file) {
         return documentRepository.save(
                 Document.childBuilder()
                         .originalName(file.getOriginalFilename())
-                        .generatedName(randomUUID()+file.getOriginalFilename())
+                        .generatedName(randomUUID() + file.getOriginalFilename())
                         .extension(StringUtils.getFilenameExtension(file.getOriginalFilename()))
                         .mimeType(file.getContentType())
                         .size(file.getSize())
@@ -37,6 +39,7 @@ public class DocumentService {
         );
     }
 
+//    @Async
     public List<Document> saveDocuments(List<MultipartFile> files) {
         List<Document> documents = new ArrayList<>();
         files.forEach(
@@ -70,6 +73,10 @@ public class DocumentService {
     }
 
 
-
+    public Document download(String fileName) {
+        return documentRepository.findByPath(fileName).orElseThrow(
+                () -> new RuntimeException("Document not found")
+        );
+    }
 }
 

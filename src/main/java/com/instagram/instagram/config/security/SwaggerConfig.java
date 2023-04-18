@@ -63,7 +63,7 @@ public class SwaggerConfig {
     public GroupedOpenApi annotationGroupAPI() {
         return GroupedOpenApi.builder()
                 .group("annotation")
-                .pathsToMatch("/post/**", "/config/**", "/file/**", "/user/**","/document/**")
+                .pathsToMatch("/post/**", "/config/**", "/user/**","/document/**")
                 .build();
     }
 }
