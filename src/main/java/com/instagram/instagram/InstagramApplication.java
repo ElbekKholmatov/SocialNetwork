@@ -31,7 +31,7 @@ import java.io.IOException;
 )
 public class InstagramApplication {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         SpringApplication.run(InstagramApplication.class, args);
     }
 
