@@ -41,7 +41,7 @@ public class FollowController {
     }
 
     @PostMapping("/followers")
-    public ResponseEntity<List<User>> followers(@RequestBody FollowersCriteria criteria) {
+    public ResponseEntity<List<User>> followers(@Valid FollowersCriteria criteria) {
         return ResponseEntity.ok(followService.findAll(criteria));
     }
 }

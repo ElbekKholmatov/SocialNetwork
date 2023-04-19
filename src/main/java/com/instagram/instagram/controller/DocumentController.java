@@ -29,37 +29,30 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/document")
 @Tag(
-        name = "Post Controller",
-        description = "this controller created for playing with post entity"
+        name = "Media Controller",
+        description = "This is a Java class named \"DocumentController\" that serves as a controller for a REST API. It contains various HTTP endpoints that allow clients to interact with the API, including endpoints for retrieving, creating, and uploading documents."
 )
 public class DocumentController {
 
     private final DocumentService documentService;
-    private final SessionUser sessionUser;
 
-    @Operation(summary = "This API used for creating a post",
-            description = "This endpoint was designed for creating a post"
-            /*,deprecated = true*/)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Post Successfully Created",
-                    content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = Post.class)
-                            )
-                    }),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = {
-                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = RuntimeException.class)
-                            )
-                    })
-    })
-    @GetMapping("/")
-    public ResponseEntity<List<Document>> getDocuments(){
-        return ResponseEntity.ok(
-                documentService.getDocuments()
-        );
-    }
+//    @Operation(summary = "This API used for creating a post",
+//            description = "This endpoint was designed for creating a post"
+//            /*,deprecated = true*/)
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "201", description = "Post Successfully Created",
+//                    content = {
+//                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+//                                    schema = @Schema(implementation = Post.class)
+//                            )
+//                    }),
+//            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+//                    content = {
+//                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+//                                    schema = @Schema(implementation = RuntimeException.class)
+//                            )
+//                    })
+//    })
     @GetMapping("/{id}")
     public ResponseEntity<Document> getDocument(@PathVariable Long id){
         return ResponseEntity.ok(
@@ -68,6 +61,16 @@ public class DocumentController {
                 )
         );
     }
+
+    @GetMapping("/createdBy")
+    public Page<Document> getAllDocsBySessionUser(
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "page", defaultValue = "0") int page
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        return documentService.getAllDocsBySessionUser(pageable);
+    }
+
 
     @GetMapping("/pagination")
     public Page<Document> getPosts(

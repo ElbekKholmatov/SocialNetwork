@@ -4,6 +4,7 @@ package com.instagram.instagram;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.repository.AuthUserRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -13,6 +14,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -53,5 +55,9 @@ public class InstagramApplication {
 //    }
 
 
+    @Bean
+    public AuditorAware<Long> auditorProvider(SessionUser sessionUser) {
+        return ()-> java.util.Optional.of(sessionUser == null ? -1L : sessionUser.id());
+    }
 
 }
