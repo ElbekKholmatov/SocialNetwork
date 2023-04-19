@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public List<User> getUsers(List<Long> ids, FollowersCriteria criteria) {
-        List<User> users = userRepository.findAllById(ids);
+        List<User> users = userRepository.findAllByAuthUserId(ids);
         if(criteria.getSortKey()== FollowersCriteria.SortKey.NAME){
             if(criteria.getOrder()== FollowersCriteria.Order.ASC){
                 users = users.stream().sorted(Comparator.comparing(User::getFullName)).toList();
