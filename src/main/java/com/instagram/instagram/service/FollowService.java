@@ -36,14 +36,14 @@ public class FollowService {
     public void save(AuthUser from, AuthUser to) {
         followRepository.save(new Follow(from,to, LocalDateTime.now()));
         log.info("User with id {} is following user with id {}",from.getId(),to.getId());
-        notificationRepository.save(new Notification(from.getUsername()+" has started following you!",false,from, Notification.NotificationType.FOLLOW));
+        notificationRepository.save(new Notification(from.getUsername()+" has started following you!",false,from, to, Notification.NotificationType.FOLLOW));
         log.info("Notification sent to user with id {} about following",to.getId());
     }
 
     public void unfollow(AuthUser from, AuthUser to) {
         followRepository.delete(from.getId(),to.getId());
         log.info("User with id {} is following user with id {}",from.getId(),to.getId());
-        notificationRepository.save(new Notification(from.getUsername()+" has stopped following you!",false,from, Notification.NotificationType.FOLLOW));
+        notificationRepository.save(new Notification(from.getUsername()+" has stopped following you!",false,from,to, Notification.NotificationType.FOLLOW));
         log.info("Notification sent to user with id {} about unfollowing",to.getId());
     }
 

@@ -16,11 +16,16 @@ import jakarta.persistence.*;
 public class Notification extends Auditable<Long>{
 
     private String message;
+
     private boolean seen;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private AuthUser user;
+    @JoinColumn(name = "from_id")
+    private AuthUser author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_id")
+    private AuthUser toUser;
 
     @Enumerated(EnumType.STRING)
     private NotificationType type;
