@@ -25,4 +25,6 @@ public class Location extends Auditable<Long> {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+
 }

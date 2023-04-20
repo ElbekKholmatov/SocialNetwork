@@ -1,39 +1,30 @@
 package com.instagram.instagram.controller;
 
-import com.instagram.instagram.domains.Location;
-import com.instagram.instagram.dto.LocationDto;
-import com.instagram.instagram.repository.LocationRepository;
 import com.instagram.instagram.service.LocationService;
-import com.maxmind.geoip2.exception.GeoIp2Exception;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.NonNull;
-import lombok.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/location")
 
 public class LocationController {
 
+    private final LocationService locationService;
     private Long userId;
 
+    public LocationController(LocationService locationService) {
+        this.locationService = locationService;
+    }
+
+
+    @PostMapping(name = "/ip")
+    public ResponseEntity<String> getClientIp(@RequestParam double latitude, @RequestParam double longitude) {
+        String address = locationService.convert(latitude, longitude);
+        return ResponseEntity.ok(address);
+    }
+
     @GetMapping("/ip")
-    public String getClientIp(double latitude, double longitude) throws Exception {
+    public String getClientIp2(double latitude, double longitude) throws Exception {
 
 
 //        String remoteAddr = "";
@@ -49,9 +40,7 @@ public class LocationController {
 //
 //        LocationService.ipToLatLong(remoteAddr);
 
-        return LocationService.convert(latitude,longitude);
-
-
+        return locationService.convert(latitude, longitude);
 
 
     }
