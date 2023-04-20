@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Modifying
     @Transactional
@@ -17,4 +19,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
 //    @Query(value = "from Follow f where f.following.username=?1")
     Page<Follow> findAllByFollowing(AuthUser following, Pageable pageable);
+
+    @Query("select f.following from Follow f where f.follower =? 1")
+    List<Long> findAllMyFollowers(Long id);
 }

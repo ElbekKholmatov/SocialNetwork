@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOGS" value="/home/elbek/IdeaProjects/instagram-app-new/log"/>
+    <property name="LOGS" value="E:\IdeaProjects\SocialNetwork\log"/>
 
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">

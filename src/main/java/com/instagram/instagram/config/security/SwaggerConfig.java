@@ -130,5 +130,15 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi location() {
+        return GroupedOpenApi.builder()
+                .group("location")
+                .pathsToMatch(
+                        "/api/v1/location/**"
+                )
+                .build();
+    }
+
 }
 

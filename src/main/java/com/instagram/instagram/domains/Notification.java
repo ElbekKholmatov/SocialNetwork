@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -14,30 +17,15 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Notification extends Auditable<Long>{
-
     private String message;
-
     private boolean seen;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_id")
     private AuthUser author;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_id")
-    private AuthUser toUser;
-
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AuthUser> toUser;
     @Enumerated(EnumType.STRING)
     private NotificationType type;
-
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "story_id")
-//    private Story story;
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "live_id")
-//    private Live live;
 
     public enum NotificationType {
         LIKE,
@@ -48,7 +36,18 @@ public class Notification extends Auditable<Long>{
         MENTION,
         IGTV,
         LIVE,
-        STORY
+        STORY,
+        NEW_POST
     }
 
+    @Builder(builderMethodName = "childBuilder")
+    public Notification(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted,String message,boolean seen,AuthUser from,List<AuthUser> to,NotificationType type){
+        super(id, createdAt, updatedAt, createdBy, updatedBy, deleted);
+        this.message = message;
+        this.seen = seen;
+        this.author = from;
+        this.toUser = to;
+        this.type = type;
+
+    }
 }

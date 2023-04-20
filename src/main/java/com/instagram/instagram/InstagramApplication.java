@@ -42,9 +42,9 @@ public class InstagramApplication {
 //    ApplicationRunner runner(AuthUserRepository authUserRepository, PasswordEncoder passwordEncoder) {
 //        return args -> {
 //            AuthUser authUser = AuthUser.childBuilder()
-//                    .username("john")
-//                    .email("jlkesh@gmail.com")
-//                    .phoneNumber("+998971112233")
+//                    .username("jason")
+//                    .email("ekl@gmail.com")
+//                    .phoneNumber("+998976437730")
 //                    .password(passwordEncoder.encode("123"))
 //                    .language(AuthUser.Language.ENGLISH)
 //                    .role(AuthUser.Role.USER)
