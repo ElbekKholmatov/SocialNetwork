@@ -49,20 +49,22 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<GetTokenDTO> register(
-            @RequestBody CreateAuthUserDTO dto
+            CreateAuthUserDTO dto
     ) {
         return ResponseEntity.ok(authService.register(dto));
     }
 
     @PostMapping("/login")
     public ResponseEntity<GetTokenDTO> login(
-            @RequestBody CreateAuthUserDTO request
+           CreateAuthUserDTO request
     ) {
         return ResponseEntity.ok(authService.login(request));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<GetTokenDTO> update(@RequestBody UpdateAuthUserDTO dto) {
+    public ResponseEntity<GetTokenDTO> update(
+            UpdateAuthUserDTO dto
+    ) {
         return ResponseEntity.ok(authService.update(dto));
     }
 
