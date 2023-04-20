@@ -26,7 +26,6 @@ public class Document extends Auditable<Long> {
     private String mimeType;
     @Column(nullable = false)
     private Long size;
-//    private String caption;
     private String path;
 
     @Builder(builderMethodName = "childBuilder")

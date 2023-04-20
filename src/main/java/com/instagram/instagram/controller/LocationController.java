@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 @RestController
-@RequestMapping("/api/v1/Location")
+@RequestMapping("/api/v1/location")
 
 public class LocationController {
 

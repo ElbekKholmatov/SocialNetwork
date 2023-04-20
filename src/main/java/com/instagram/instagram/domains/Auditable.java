@@ -3,6 +3,7 @@ package com.instagram.instagram.domains;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class Auditable<ID extends Serializable> {
     @Column(nullable = false, columnDefinition = "timestamp default now()")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
+    @CreatedBy
     private ID createdBy;
     private ID updatedBy;
 
