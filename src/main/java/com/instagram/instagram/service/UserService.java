@@ -24,8 +24,12 @@ public class UserService {
                 .orElseThrow(()->new UsernameNotFoundException("Username not found"));
     }
 
+    public AuthUser getUser(Long id) {
+        return authUserRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Username not found"));
+    }
+
     public List<User> getUsers(List<Long> ids, FollowersCriteria criteria) {
-        List<User> users = userRepository.findAllById(ids);
+        List<User> users = userRepository.findAllByAuthUserId(ids);
         if(criteria.getSortKey()== FollowersCriteria.SortKey.NAME){
             if(criteria.getOrder()== FollowersCriteria.Order.ASC){
                 users = users.stream().sorted(Comparator.comparing(User::getFullName)).toList();
@@ -34,6 +38,20 @@ public class UserService {
             }
         }
         return users;
+    }
+
+    public void saveUserByAuthId(String username, Long authId) {
+        User user = User.builder()
+                .authUserId(authId)
+                .fullName(username)
+                .bio("")
+                .gender(User.Gender.NOT_GIVEN)
+                .picture(null)
+                .build();
+
+        System.out.println("User Service    34:  =>  user saving process      ");
+        System.out.println(user.toString());
+        userRepository.save(user);
     }
 }
 
