@@ -4,6 +4,9 @@ import com.instagram.instagram.service.LocationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/location")
 
@@ -18,30 +21,8 @@ public class LocationController {
 
 
     @PostMapping(name = "/ip")
-    public ResponseEntity<String> getClientIp(@RequestParam double latitude, @RequestParam double longitude) {
-        String address = locationService.convert(latitude, longitude);
-        return ResponseEntity.ok(address);
-    }
-
-    @GetMapping("/ip")
-    public String getClientIp2(double latitude, double longitude) throws Exception {
-
-
-//        String remoteAddr = "";
-//
-//        if (request != null) {
-//            remoteAddr = request.getHeader("X-FORWARDED-FOR");
-//            if (remoteAddr == null || "".equals(remoteAddr)) {
-//                remoteAddr = request.getRemoteAddr();
-//            }
-//        }
-//        LocationService locationService = new LocationService();
-//        Location location = locationService.getGeoLocation(remoteAddr);
-//
-//        LocationService.ipToLatLong(remoteAddr);
-
-        return locationService.convert(latitude, longitude);
-
-
+    public ResponseEntity<List<Map<String, Object>>> getClientIp(@RequestParam double latitude, @RequestParam double longitude) {
+        List<Map<String, Object>> convert = locationService.convert(latitude, longitude);
+        return ResponseEntity.ok(convert);
     }
 }

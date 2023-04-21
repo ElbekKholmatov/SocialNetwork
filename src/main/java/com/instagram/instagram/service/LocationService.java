@@ -17,6 +17,10 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class LocationService {
@@ -57,7 +61,7 @@ public class LocationService {
     }
 
 
-    public String convert(double latitude, double longitude) {
+    public List<Map<String, Object>> convert(double latitude, double longitude) {
 
         String urlString = "https://nominatim.openstreetmap.org/reverse?lat="
                 + latitude + "&lon=" + longitude + "&format=jsonv2";
@@ -97,7 +101,17 @@ public class LocationService {
                             .latitude(latitude)
                             .createdBy(sessionUser.id())
                             .build());
-            return String.valueOf(location.getAddress());
+
+
+
+            List<Map<String, Object>> resultList = new ArrayList<>();
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("address",String.valueOf(address) );
+            resultMap.put("longitude",longitude );
+            resultMap.put("latitude",latitude );
+            resultMap.put("createdBy",sessionUser.id());
+            resultList.add(resultMap);
+            return resultList;
 
         } catch (JSONException e) {
             e.printStackTrace();
