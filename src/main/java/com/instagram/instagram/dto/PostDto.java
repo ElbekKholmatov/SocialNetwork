@@ -20,6 +20,6 @@ public class PostDto implements Serializable {
     private final String caption;
     private final List<Long> documents;
     private final List<String> mentions;
-    private final Location location;
+    private final Long location;
     private final List<String> hashTags;
 }
