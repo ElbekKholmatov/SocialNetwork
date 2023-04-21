@@ -2,6 +2,7 @@ package com.instagram.instagram.service;
 
 import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.HashTag;
+import com.instagram.instagram.domains.Location;
 import com.instagram.instagram.domains.Notification;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.domains.basic.Document;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class PostService {
     private final SessionUser sessionUser;
     private final NotificationService notificationService;
     private final FollowService followService;
+    private final LocationService locationService;
 
 
     public Optional<Post> getPost(Long id) {
@@ -50,7 +53,7 @@ public class PostService {
         if (sessionUId ==-1) {
             throw new RuntimeException("User not found");
         }
-        CreatePostDTO createPostDTO = new CreatePostDTO(sessionUId,dto.getCaption(),dto.getLocation());
+        CreatePostDTO createPostDTO = new CreatePostDTO(sessionUId,dto.getCaption(),locationService.findById(dto.getLocation()));
         Post post = POST_MAPPER.toEntity(createPostDTO);
         List<Document> documents = new ArrayList<>();
         dto.getDocuments().forEach(document -> {
