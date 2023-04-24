@@ -123,7 +123,7 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi saved() {
         return GroupedOpenApi.builder()
-                .group("Saved")
+                .group("saved")
                 .pathsToMatch(
                         "/api/v1/saved/**"
                 )
@@ -141,7 +141,7 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi notifcation() {
+    public GroupedOpenApi notification() {
         return GroupedOpenApi.builder()
                 .group("notification")
                 .pathsToMatch(

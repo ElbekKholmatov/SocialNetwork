@@ -31,8 +31,6 @@ public class SecurityConfigurer {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(httpReq -> httpReq
                         .requestMatchers("/api/v1/auth/token/**",
-                                "/file/**",
-                                "/document/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/**",

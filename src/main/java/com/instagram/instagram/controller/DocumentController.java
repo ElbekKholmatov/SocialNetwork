@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -111,6 +112,8 @@ public class DocumentController {
                 documentService.file(filePath)
         );
     }
+
+
 //    @PostMapping(name = "/uploadFile")
 //    public ResponseEntity<Document> uploadDoc(@RequestParam("file") MultipartFile file){
 //        return ResponseEntity.ok(
