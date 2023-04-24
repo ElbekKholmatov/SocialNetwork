@@ -1,5 +1,6 @@
 package com.instagram.instagram.service;
 
+import com.instagram.instagram.config.GlobalExceptionHandler;
 import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.Saved;
 import com.instagram.instagram.domains.auth.AuthUser;
@@ -7,6 +8,7 @@ import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.firebase.MediaService;
 import com.instagram.instagram.repository.DocumentRepository;
 import com.instagram.instagram.repository.UserRepository;
+import jakarta.persistence.Access;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +50,12 @@ public class DocumentService {
 
 
     public List<Document> saveDocuments(List<MultipartFile> files) {
+        if (sessionUser.id() == -1) {
+            throw new RuntimeException("User not found");
+        }
+        if (files.isEmpty()) {
+            throw new RuntimeException("File not found");
+        }
         List<Document> documents = new ArrayList<>();
         files.forEach(
                 file -> {
@@ -85,6 +93,9 @@ public class DocumentService {
     }
 
     public Page<Document> getAllDocsBySessionUser(Pageable pageable) {
+        if (sessionUser.id() == -1) {
+            throw new RuntimeException("User not found");
+        }
         return documentRepository.findAllByCreatedBy(sessionUser.id(), pageable);
     }
 

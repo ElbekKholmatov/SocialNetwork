@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface DocumentRepository extends JpaRepository<Document, Long> {
-    @Query("select d from Document d where d.path = ?1")
+    @Query("select d from Document d where d.generatedName = ?1")
     Optional<Document> findByPath(String fileName);
 
     @Query("select d from Document d where d.createdBy = ?1")

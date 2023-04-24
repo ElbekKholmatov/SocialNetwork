@@ -87,6 +87,13 @@ public class DocumentController {
                 documentService.saveDocuments(files)
         );
     }
+
+    @PostMapping
+    public ResponseEntity<Document> downloadFile(String fileName) throws IOException {
+        return ResponseEntity.ok(
+                documentService.download(fileName)
+        );
+    }
 //    @PostMapping(name = "/uploadFile")
 //    public ResponseEntity<Document> uploadDoc(@RequestParam("file") MultipartFile file){
 //        return ResponseEntity.ok(
