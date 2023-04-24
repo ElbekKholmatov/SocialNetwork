@@ -1,7 +1,9 @@
 package com.instagram.instagram.controller;
 
+import com.instagram.instagram.dto.GetTokenDTO;
 import com.instagram.instagram.service.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,13 +15,14 @@ public class MailController {
 
 
     @PostMapping
-    public String sendActivationLink(
+    public String resendActivation(
             @RequestParam String username,
             @RequestParam String email){
 
-        notificationSenderService.sendActivationLink(username, email);
+        notificationSenderService.resendActivationLink(username, email);
 
         return "Notification successfully sent to " + username + " !!!";
     }
+
 
 }

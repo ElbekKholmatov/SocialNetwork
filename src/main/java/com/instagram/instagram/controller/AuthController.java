@@ -1,11 +1,11 @@
 package com.instagram.instagram.controller;
 
-import com.instagram.instagram.config.security.JwtUtils;
 import com.instagram.instagram.config.security.UserDetailsService;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.dto.GetTokenDTO;
 import com.instagram.instagram.dto.auth.*;
 import com.instagram.instagram.service.AuthService;
+import com.instagram.instagram.service.MailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,8 @@ public class AuthController {
 
     private final UserDetailsService userDetailsService;
     private final AuthService authService;
-    private final JwtUtils jwt;
+    private final MailService mailService;
+
 
     @GetMapping("/token")
     public ResponseEntity<TokenResponse> getToken(@Valid TokenRequest tokenRequest) {
@@ -35,10 +36,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<GetTokenDTO> register(
+    public ResponseEntity<String> register(
             CreateAuthUserDTO dto
     ) {
-        return ResponseEntity.ok(authService.register(dto));
+         authService.register(dto);
+            return ResponseEntity.ok("User registered successfully\n" +
+                    "Please check your email for activation link");
     }
 
     @PostMapping("/login")
@@ -74,6 +77,16 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout() {
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/activate")
+    public ResponseEntity<GetTokenDTO> activate(
+            @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String otp){
+
+        GetTokenDTO activate = authService.activate(username, email, otp);
+        return ResponseEntity.ok(activate);
     }
 
 }

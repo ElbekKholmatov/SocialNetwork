@@ -15,6 +15,7 @@ public record CreateAuthUserDTO(
         String email,
         @Pattern(regexp = "^\\+998\\d{2}\\d{7}$")
         String phoneNumber,
-        String password
+        String password,
+        String confirmPassword
 ) implements Serializable {
 }
