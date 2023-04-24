@@ -13,7 +13,6 @@ import java.util.Map;
 public class LocationController {
 
     private final LocationService locationService;
-    private Long userId;
 
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
@@ -25,4 +24,13 @@ public class LocationController {
         List<Map<String, Object>> convert = locationService.convert(latitude, longitude);
         return ResponseEntity.ok(convert);
     }
+
+    @GetMapping(name = "/getIp")
+    public ResponseEntity<String> getFullInfo(@RequestParam double latitude, @RequestParam double longitude) {
+        String address = locationService.convertToAddress(latitude, longitude);
+        return ResponseEntity.ok(address);
+    }
+
+
+
 }
