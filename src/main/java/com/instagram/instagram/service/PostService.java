@@ -54,8 +54,12 @@ public class PostService {
             throw new RuntimeException("User not found");
         }
         CreatePostDTO createPostDTO = new CreatePostDTO(sessionUId,dto.getCaption(),locationService.findById(dto.getLocation()));
+
         Post post = POST_MAPPER.toEntity(createPostDTO);
+
+
         List<Document> documents = new ArrayList<>();
+
         dto.getDocuments().forEach(document -> {
             documents.add(documentService.getDocument(document).orElseThrow(
                     () -> new RuntimeException("Document not found")
@@ -63,10 +67,13 @@ public class PostService {
         });
 
         List<AuthUser> mentions = new ArrayList<>();
+
         dto.getMentions().forEach(mention -> mentions.add(userService.getUser(mention)));
 
         List<HashTag> hashTags = new ArrayList<>();
+
         dto.getHashTags().forEach(hashTag -> {
+
             hashTagService.getHashTag(hashTag).ifPresentOrElse(
                     hashTags::add,
                     () -> hashTags.add(hashTagService.save(hashTag))
@@ -88,15 +95,17 @@ public class PostService {
                 .build();
         notificationService.save(notification);
         List<AuthUser> myFollowers = new ArrayList<>();
-        followService.findFollowers(sessionUId).forEach(a -> myFollowers.add(userService.getUser(a)));
-        notification = Notification.childBuilder()
-                .message("New post from")
-                .from(userService.getUser(sessionUId))
-                .to(myFollowers)
-                .type(Notification.NotificationType.NEW_POST)
-                .build();
-        notificationService.save(notification);
-
+        followService.findFollowers(sessionUId)
+                .forEach(a -> myFollowers.add(userService.getUser(a)));
+        if (!myFollowers.isEmpty()) {
+            Notification notification2 = Notification.childBuilder()
+                    .message("New post from your following")
+                    .from(userService.getUser(sessionUId))
+                    .to(myFollowers)
+                    .type(Notification.NotificationType.NEW_POST)
+                    .build();
+            notificationService.save(notification2);
+        }
         return postRepository.save(post);
     }
 

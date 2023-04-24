@@ -20,6 +20,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 //    @Query(value = "from Follow f where f.following.username=?1")
     Page<Follow> findAllByFollowing(AuthUser following, Pageable pageable);
 
-    @Query("select f.following from Follow f where f.follower =? 1")
+    @Query("select f.following.id from Follow f where f.follower.id = ?1")
     List<Long> findAllMyFollowers(Long id);
 }

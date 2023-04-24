@@ -22,8 +22,10 @@ public class Notification extends Auditable<Long>{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_id")
     private AuthUser author;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AuthUser> toUser;
+
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
@@ -31,6 +33,7 @@ public class Notification extends Auditable<Long>{
         LIKE,
         COMMENT,
         FOLLOW,
+        UNFOLLOW,
         DIRECT_MESSAGE,
         TAG,
         MENTION,

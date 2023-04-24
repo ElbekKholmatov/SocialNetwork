@@ -1,5 +1,6 @@
 package com.instagram.instagram.service;
 
+import ch.qos.logback.core.testUtil.RandomUtil;
 import com.instagram.instagram.config.security.JwtUtils;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.dto.GetTokenDTO;
@@ -15,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -23,6 +26,7 @@ public class AuthService {
     private final JwtUtils jwtUtils;
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final MailService mailService;
 
     public GetTokenDTO register(CreateAuthUserDTO dto) {
         AuthUser authUser = new AuthUser();
@@ -32,8 +36,12 @@ public class AuthService {
         authUser.setPassword(passwordEncoder.encode(dto.password()));
         authUser.setLanguage(AuthUser.Language.UZBEK);
         authUser.setRole(AuthUser.Role.USER);
+        authUser.setActive(AuthUser.Active.IN_ACTIVE);
 
         authUserRepository.save(authUser);
+
+        mailService.sendActivationLink(authUser.getUsername(), authUser.getEmail());
+
         TokenResponse tokenResponse = jwtUtils.generateToken(authUser.getUsername());
 
         Long authId = authUserRepository.findAuthIdByUsername(authUser.getUsername());

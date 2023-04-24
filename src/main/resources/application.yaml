@@ -13,6 +13,20 @@ spring:
       max-file-size: 1000MB
       max-request-size: 1000MB
 
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    username: d52ed9041cdb11
+    password: e6efb2894e5df0
+    port: 587
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+  freemarker:
+    template-loader-path: classpath:/
+---
+
 server:
   port: 8081
 springdoc:

@@ -1,23 +1,19 @@
 package com.instagram.instagram.controller;
 
-
 import com.instagram.instagram.config.security.JwtUtils;
 import com.instagram.instagram.config.security.UserDetailsService;
 import com.instagram.instagram.domains.auth.AuthUser;
-import com.instagram.instagram.dto.GenerateTokenDTO;
 import com.instagram.instagram.dto.GetTokenDTO;
-import com.instagram.instagram.dto.auth.CreateAuthUserDTO;
-import com.instagram.instagram.dto.auth.UpdateAuthUserDTO;
+import com.instagram.instagram.dto.auth.*;
 import com.instagram.instagram.service.AuthService;
-import com.instagram.instagram.dto.auth.TokenRequest;
-import com.instagram.instagram.dto.auth.TokenResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
@@ -32,20 +28,11 @@ public class AuthController {
         return ResponseEntity.ok(userDetailsService.generateToken(tokenRequest));
     }
 
-//    @PostMapping("/refresh")
-//    public ResponseEntity<?> refresh(@CookieValue(name = "refreshToken", required = false) String refreshToken) {
-//        if (refreshToken == null) {
-//            return ResponseEntity.badRequest().body("Refresh token not provided");
-//        }
-//        String username = jwt.extractUsername(refreshToken)
-//        if (username == null) {
-//            return ResponseEntity.badRequest().body("Invalid refresh token");
-//        }
-//        jwt.getAuthe
-//        Authentication authentication = jwtTokenProvider.getAuthentication(username);
-//        String newAccessToken = jwtTokenProvider.generateAccessToken(authentication);
-//        return ResponseEntity.ok(newAccessToken);
-//    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<TokenResponse> refresh(@Valid RefreshTokenRequest refreshTokenRequest) {
+        return ResponseEntity.ok(userDetailsService.refreshToken(refreshTokenRequest));
+    }
 
     @PostMapping("/register")
     public ResponseEntity<GetTokenDTO> register(

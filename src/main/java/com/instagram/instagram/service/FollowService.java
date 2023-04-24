@@ -7,6 +7,7 @@ import com.instagram.instagram.domains.basic.User;
 import com.instagram.instagram.repository.NotificationRepository;
 import com.instagram.instagram.domains.auth.AuthUser;
 import com.instagram.instagram.repository.FollowRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,29 +22,39 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class FollowService {
     private final FollowRepository followRepository;
     private final NotificationRepository notificationRepository;
     private final UserService userService;
 
-    public FollowService(FollowRepository followRepository,
-                         NotificationRepository notificationRepository, UserService userService) {
-        this.followRepository = followRepository;
-        this.notificationRepository = notificationRepository;
-        this.userService = userService;
-    }
 
     public void save(AuthUser from, AuthUser to) {
         followRepository.save(new Follow(from,to, LocalDateTime.now()));
         log.info("User with id {} is following user with id {}",from.getId(),to.getId());
-        notificationRepository.save(new Notification(from.getUsername()+" has started following you!",false,from, List.of(to), Notification.NotificationType.FOLLOW));
+        notificationRepository.save(
+                Notification.childBuilder()
+                        .message(from.getUsername()+" has started following you!")
+                        .seen(false)
+                        .from(from)
+                        .to(List.of(to))
+                        .type(Notification.NotificationType.FOLLOW)
+                        .build());
         log.info("Notification sent to user with id {} about following",to.getId());
     }
 
     public void unfollow(AuthUser from, AuthUser to) {
         followRepository.delete(from.getId(),to.getId());
         log.info("User with id {} is following user with id {}",from.getId(),to.getId());
-        notificationRepository.save(new Notification(from.getUsername()+" has stopped following you!",false,from,List.of(to), Notification.NotificationType.FOLLOW));
+        notificationRepository.save(
+                Notification.childBuilder()
+                        .message(from.getUsername()+" has stopped following you!")
+                        .seen(false)
+                        .from(from)
+                        .to(List.of(to))
+                        .type(Notification.NotificationType.UNFOLLOW)
+                        .build()
+        );
         log.info("Notification sent to user with id {} about unfollowing",to.getId());
     }
 

@@ -22,13 +22,13 @@ public class SwaggerConfig {
     public OpenAPI springOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Spring 6 Swagger 2 Annotation Example")
-                        .description("Spring 6 Swagger Simple Application")
+                        .title("Social Network API")
+                        .description("This is a sample Spring Boot RESTful service using springdoc-openapi and OpenAPI 3.")
                         .version("${api.version}")
                         .contact(new Contact()
-                                .name("ELbek Kholmatov")
+                                .name("Excezours")
                                 .email("exolmatov99@gmail.com")
-                                .url("https://github.com/ElbekKholmatov"))
+                                .url("redirect:/sheengo.live"))
                         .license(new License()
                                 .name("Apache 2.0")
                                 .url("http://springdoc.org"))
@@ -140,5 +140,24 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi notifcation() {
+        return GroupedOpenApi.builder()
+                .group("notification")
+                .pathsToMatch(
+                        "/api/v1/notification/**"
+                )
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi mailing() {
+        return GroupedOpenApi.builder()
+                .group("mailing")
+                .pathsToMatch(
+                        "/api/v1/mail/**"
+                )
+                .build();
+    }
 }
 

@@ -47,7 +47,7 @@ public class JwtUtils {
         String refreshToken = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setIssuer("https://online.pdp.uz")
+                .setIssuer("sheengo.live")
                 .setExpiration(tokenResponse.getRefreshTokenExpiry())
                 .signWith(signKey(REFRESH), SignatureAlgorithm.HS256)
                 .compact();
@@ -60,7 +60,7 @@ public class JwtUtils {
         String accessToken = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setIssuer("https://online.pdp.uz")
+                .setIssuer("sheengo.live")
                 .setExpiration(tokenResponse.getAccessTokenExpiry())
                 .signWith(signKey(ACCESS), SignatureAlgorithm.HS512)
                 .compact();
