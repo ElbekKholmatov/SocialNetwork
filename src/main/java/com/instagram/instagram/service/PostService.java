@@ -1,5 +1,6 @@
 package com.instagram.instagram.service;
 
+import com.instagram.instagram.config.GlobalExceptionHandler;
 import com.instagram.instagram.config.security.SessionUser;
 import com.instagram.instagram.domains.HashTag;
 import com.instagram.instagram.domains.Location;
@@ -109,7 +110,9 @@ public class PostService {
         return postRepository.save(post);
     }
 
+
     public Page<Post> getPostsByMention(String mention, Pageable pageable) {
+
         AuthUser user = userService.getUser(mention);
         return postRepository.findAllByMentionsUsername(user, pageable);
 
