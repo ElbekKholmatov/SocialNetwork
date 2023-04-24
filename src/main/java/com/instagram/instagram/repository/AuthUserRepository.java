@@ -30,4 +30,9 @@ public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
                    @Param("_email") String email,
                    @Param("_language") AuthUser.Language language);
 
+    @Query("select a.username from AuthUser a where a.id = ?1")
+    String findAuthUsernameById(Long id);
+
+    @Query("select a from AuthUser a where upper(a.email) = upper(?1)")
+    Optional<AuthUser> findByEmail(String email);
 }

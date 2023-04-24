@@ -1,5 +1,6 @@
 package com.instagram.instagram.dto.auth;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.Pattern;
 import org.springdoc.core.annotations.ParameterObject;
 

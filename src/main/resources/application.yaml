@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/instagram?currentSchema=instagram
+    url: jdbc:postgresql://localhost:5433/instagram?currentSchema=instagram
     username: postgres
     password: 123
     driverClassName: org.postgresql.Driver
@@ -15,8 +15,8 @@ spring:
 
   mail:
     host: sandbox.smtp.mailtrap.io
-    username: d52ed9041cdb11
-    password: e6efb2894e5df0
+    username: 7d2580a8555928
+    password: 9b3d209d448b5b
     port: 587
     properties:
       smtp:

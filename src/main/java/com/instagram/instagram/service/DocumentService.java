@@ -8,6 +8,7 @@ import com.instagram.instagram.firebase.MediaService;
 import com.instagram.instagram.repository.DocumentRepository;
 import com.instagram.instagram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -30,7 +31,7 @@ public class DocumentService {
     private final MediaService mediaService;
     private final SessionUser sessionUser;
     private final UserRepository userRepository;
-    private final UserService userService;
+//    private final UserService userService;
 
     //    @Async
     public Document saveDocument(MultipartFile file) {
