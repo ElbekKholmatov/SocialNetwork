@@ -29,8 +29,8 @@ public class Document extends Auditable<Long> {
     private String path;
 
     @Builder(builderMethodName = "childBuilder")
-    public Document(Long aLong, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size, String path) {
-        super(aLong, createdAt, updatedAt, createdBy, updatedBy, deleted);
+    public Document(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Long createdBy, Long updatedBy, boolean deleted, String originalName, String generatedName, String extension, String mimeType, Long size, String path) {
+        super(id, createdAt, updatedAt, createdBy, updatedBy, deleted);
         this.originalName = originalName;
         this.generatedName = generatedName;
         this.extension = extension;

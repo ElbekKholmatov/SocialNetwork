@@ -1,8 +1,10 @@
 package com.instagram.instagram.controller;
 
 import com.instagram.instagram.config.security.SessionUser;
+import com.instagram.instagram.domains.Link;
 import com.instagram.instagram.domains.basic.Document;
 import com.instagram.instagram.domains.basic.Post;
+import com.instagram.instagram.dto.ReturnDocumentDTO;
 import com.instagram.instagram.service.DocumentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -88,10 +93,22 @@ public class DocumentController {
         );
     }
 
-    @PostMapping
+    @PostMapping("filename")
     public ResponseEntity<Document> downloadFile(String fileName) throws IOException {
         return ResponseEntity.ok(
                 documentService.download(fileName)
+        );
+    }
+    @GetMapping("filename")
+    public ResponseEntity<ReturnDocumentDTO> downloadFileURI(String fileName) throws IOException, URISyntaxException {
+        return ResponseEntity.ok(
+                documentService.downloadFileURI(fileName)
+        );
+    }
+    @PostMapping("/filepath")
+    public ResponseEntity<Document> file(String filePath) throws IOException {
+        return ResponseEntity.ok(
+                documentService.file(filePath)
         );
     }
 //    @PostMapping(name = "/uploadFile")
